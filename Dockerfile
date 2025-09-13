@@ -31,8 +31,10 @@ COPY package*.json ./
 # Install only production dependencies
 RUN npm install --only=production
 
+COPY .env ./
+
 # Environment setup
-ENV PORT=3000
+ENV PORT=3002
 EXPOSE $PORT
 
 # Start the app
