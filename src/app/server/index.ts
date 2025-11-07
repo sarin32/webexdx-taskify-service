@@ -1,13 +1,13 @@
 import { bodyParser } from '@koa/bodyparser';
 import cors from '@koa/cors';
-import { errorMiddleware } from '@webexdx/koa-wrap/middlewares';
 import { Server } from '@webexdx/koa-wrap/server';
-import logger from 'koa-logger';
 import router from '../api';
 import { PORT } from '../config/config';
 import { connection } from '../database';
+import errorMiddleware from '../middlewares/error.middleware';
+import httpLoggerMiddleware from '../middlewares/http-logger.middleware';
+import logger from '../utils/logger';
 
-const loggerMiddleware = logger();
 const corsMiddleware = cors({
   credentials: true,
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -18,17 +18,17 @@ const server = new Server({
   port: PORT,
   routes: router,
   middlewares: [
-    loggerMiddleware,
+    httpLoggerMiddleware,
     corsMiddleware,
     bodyparserMiddleware,
     errorMiddleware,
   ],
   onStartCb: () => {
-    console.log('APP IS RUNNING ON PORT ', PORT);
+    logger.info(`APP IS RUNNING ON PORT ${PORT}`);
   },
   preStartCb: async () => {
     await connection.startConnecion();
-    console.log('ESTABLISHED DATABASE CONNECTION');
+    logger.info('ESTABLISHED DATABASE CONNECTION');
   },
 });
 
