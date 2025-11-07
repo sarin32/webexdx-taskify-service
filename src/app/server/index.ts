@@ -9,6 +9,7 @@ import { connection } from '../database';
 
 const loggerMiddleware = logger();
 const corsMiddleware = cors({
+  credentials: true,
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
 });
 const bodyparserMiddleware = bodyParser();
