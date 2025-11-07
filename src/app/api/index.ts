@@ -1,6 +1,6 @@
 import type { Router } from '@webexdx/koa-wrap/server';
 import { authMiddleware } from '../middlewares/auth.middleware';
-import taskRoute from './user/task.route';
+import taskRoute from './task/task.route';
 
 const router: Router = [
   {
