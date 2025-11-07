@@ -1,6 +1,6 @@
-import { Document, ObjectId } from "mongodb";
+import type { Document, ObjectId } from 'mongodb';
 
-export type Priority = "low" | "medium" | "high";
+export type Priority = 'low' | 'medium' | 'high';
 
 export interface TaskSchema extends Document {
   userId: ObjectId; // reference to the user who owns the task

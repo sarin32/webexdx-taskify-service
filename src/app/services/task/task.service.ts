@@ -1,13 +1,13 @@
-import { taskRepository } from "../../database";
-import { NotFoundError } from "@webexdx/koa-wrap/errors";
-import {
-  TaskServiceInterface,
+import { NotFoundError } from '@webexdx/koa-wrap/errors';
+import { taskRepository } from '../../database';
+import type {
   CreateTaskParams,
-  GetTaskParams,
-  UpdateTaskParams,
   DeleteTaskParams,
   GetTaskListParams,
-} from "./task.service.interface";
+  GetTaskParams,
+  TaskServiceInterface,
+  UpdateTaskParams,
+} from './task.service.interface';
 
 class TaskService implements TaskServiceInterface {
   private readonly repository = taskRepository;
@@ -44,7 +44,7 @@ class TaskService implements TaskServiceInterface {
     const isTaskExist = await this.repository.isTaskExists({ taskId, userId });
 
     if (!isTaskExist) {
-      throw new NotFoundError("Task not found");
+      throw new NotFoundError('Task not found');
     }
 
     return this.repository.updateTask({
@@ -65,7 +65,7 @@ class TaskService implements TaskServiceInterface {
     const isTaskExist = await this.repository.isTaskExists({ taskId, userId });
 
     if (!isTaskExist) {
-      throw new NotFoundError("Task not found");
+      throw new NotFoundError('Task not found');
     }
 
     await this.repository.deleteTask({ taskId });

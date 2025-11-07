@@ -1,6 +1,6 @@
-import { Document, MongoClient } from 'mongodb';
-import { DATABASE_SETTINGS } from '../config/config';
+import { type Document, MongoClient } from 'mongodb';
 import { DATABASE_TASKIFY } from '../config';
+import { DATABASE_SETTINGS } from '../config/config';
 
 class Connection {
   private readonly client: MongoClient;
@@ -13,7 +13,9 @@ class Connection {
   }
 
   public getCollection<DocumentT extends Document>(collectionName: string) {
-    return this.client.db(DATABASE_TASKIFY).collection<DocumentT>(collectionName);
+    return this.client
+      .db(DATABASE_TASKIFY)
+      .collection<DocumentT>(collectionName);
   }
 }
 

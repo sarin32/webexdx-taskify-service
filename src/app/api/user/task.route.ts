@@ -1,37 +1,36 @@
+import { HTTPMethod, type Router } from '@webexdx/koa-wrap/server';
 import {
   createTask,
   deleteTask,
   getTask,
   getTasks,
   updateTask,
-} from "./task.controller";
-import { Router, HTTPMethod } from "@webexdx/koa-wrap/server";
-import { authMiddleware } from "../../middlewares/auth.middleware";
+} from './task.controller';
 
 const router: Router = [
   {
     method: HTTPMethod.POST,
-    path: "/",
+    path: '/',
     handler: createTask,
   },
   {
     method: HTTPMethod.DELETE,
-    path: "/:taskId",
+    path: '/:taskId',
     handler: deleteTask,
   },
   {
     method: HTTPMethod.GET,
-    path: "/:taskId",
+    path: '/:taskId',
     handler: getTask,
   },
   {
     method: HTTPMethod.PUT,
-    path: "/:taskId",
+    path: '/:taskId',
     handler: updateTask,
   },
   {
     method: HTTPMethod.GET,
-    path: "/",
+    path: '/',
     handler: getTasks,
   },
 ];

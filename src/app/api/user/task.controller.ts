@@ -1,21 +1,21 @@
-import { Context } from "koa";
+import type { Context } from 'koa';
+import { taskService } from '../../services/task/task.service';
+import { objectId } from '../../utils/data-type-util';
+import { validateRequest } from '../../utils/schema-validator';
 import {
   createTaskSchema,
   deleteTaskSchema,
   getTaskSchema,
-  updateTaskSchema,
   getTasksSchema,
-} from "./task.schema";
-import { validateRequest } from "../../utils/schema-validator";
-import { taskService } from "../../services/task/task.service";
-import { objectId } from "../../utils/data-type-util";
+  updateTaskSchema,
+} from './task.schema';
 
 export async function createTask(ctx: Context) {
   const { title, description, dueDate, priority } = validateRequest<{
     title: string;
     description?: string;
     dueDate: string;
-    priority: "high" | "medium" | "low";
+    priority: 'high' | 'medium' | 'low';
   }>(createTaskSchema, ctx.request.body);
 
   const { userId } = ctx.state.user;
@@ -32,20 +32,20 @@ export async function createTask(ctx: Context) {
 export async function deleteTask(ctx: Context) {
   const { taskId } = validateRequest<{ taskId: string }>(
     deleteTaskSchema,
-    ctx.params
+    ctx.params,
   );
 
   const { userId } = ctx.state.user;
 
   await taskService.deleteTask({ taskId: objectId(taskId), userId });
 
-  ctx.body = { message: "Task deleted successfully" };
+  ctx.body = { message: 'Task deleted successfully' };
 }
 
 export async function getTask(ctx: Context) {
   const { taskId } = validateRequest<{ taskId: string }>(
     getTaskSchema,
-    ctx.params
+    ctx.params,
   );
 
   const { userId } = ctx.state.user;
@@ -60,7 +60,7 @@ export async function updateTask(ctx: Context) {
       title: string;
       description?: string;
       dueDate: string;
-      priority: "high" | "medium" | "low";
+      priority: 'high' | 'medium' | 'low';
       isCompleted: boolean;
     }>(updateTaskSchema, { ...ctx.params, ...ctx.request.body });
 
@@ -76,20 +76,20 @@ export async function updateTask(ctx: Context) {
     priority,
   });
 
-  ctx.body = { message: "Task updated successfully" };
+  ctx.body = { message: 'Task updated successfully' };
 }
 
 export async function getTasks(ctx: Context) {
   const { status, priority } = validateRequest<{
-    status?: "all" | "completed" | "pending";
-    priority?: "all" | "low" | "medium" | "high";
+    status?: 'all' | 'completed' | 'pending';
+    priority?: 'all' | 'low' | 'medium' | 'high';
   }>(getTasksSchema, ctx.query);
 
   const { userId } = ctx.state.user;
 
   ctx.body = await taskService.getTaskList({
     userId,
-    status: status || "all",
-    priority: priority || "all",
+    status: status || 'all',
+    priority: priority || 'all',
   });
 }

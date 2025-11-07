@@ -1,6 +1,7 @@
-import { ObjectId } from "@i/common.interface";
+import type { ObjectId } from '@i/common.interface';
+import type { TaskSchema } from '../../modals/task.model';
 
-export type Priority = "low" | "medium" | "high";
+export type Priority = 'low' | 'medium' | 'high';
 
 export interface CreateTaskParams {
   userId: ObjectId;
@@ -26,8 +27,8 @@ export interface GetTaskParams {
 
 export interface GetTaskListParams {
   userId: ObjectId;
-  status?: "all" | "pending" | "completed";
-  priority?: "all" | Priority;
+  status?: 'all' | 'pending' | 'completed';
+  priority?: 'all' | Priority;
   projection?: Record<string, 1 | 0>;
 }
 
@@ -44,8 +45,8 @@ export interface IsTaskExistsParams {
 export interface TaskRepositoryInterface {
   createTask(params: CreateTaskParams): Promise<{ id: ObjectId }>;
   isTaskExists(params: IsTaskExistsParams): Promise<boolean>;
-  getTask(params: GetTaskParams): Promise<any>;
+  getTask(params: GetTaskParams): Promise<TaskSchema | null>;
   updateTask(params: UpdateTaskParams): Promise<void>;
-  getTaskList(params: GetTaskListParams): Promise<any[]>;
+  getTaskList(params: GetTaskListParams): Promise<TaskSchema[]>;
   deleteTask(params: DeleteTaskParams): Promise<void>;
 }
