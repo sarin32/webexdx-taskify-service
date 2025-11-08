@@ -1,0 +1,13 @@
+# Ignore Git-related files
+.git
+.gitignore
+.github
+# Ignore Biome and Markdown files
+.biome.json
+*.md
+# Ignore IDE and build-related files`
+.vscode
+# Ignore dependencies and build outputs
+node_modules
+build
+logs
