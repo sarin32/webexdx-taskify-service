@@ -7,7 +7,13 @@ const env = process.env;
 
 export const PORT = Number(env.PORT!);
 
-export const NODE_ENV = env.NODE_ENV;
+export enum NodeEnv {
+  DEVELOPMENT = 'development',
+  PRODUCTION = 'production',
+  TEST = 'test',
+}
+
+export const NODE_ENV = (env.NODE_ENV as NodeEnv) || NodeEnv.DEVELOPMENT;
 
 export const DATABASE_SETTINGS = {
   URL: env.DATABASE_URL!,
@@ -20,4 +26,15 @@ export const EMAIL_SETTINGS = {
   SERVICE_PROVIDER: 'gmail',
   USER_ID: env.EMAIL_USER_ID,
   PASSWORD: env.EMAIL_PASSWORD,
+};
+
+export const LOG_SETTINGS = {
+  PRINT: {
+    COLORIZE: NODE_ENV === NodeEnv.DEVELOPMENT,
+    LEVEL: env.PRINT_LOG_LEVEL || 'debug',
+  },
+  FILE: {
+    LOG_TO_FILE: NODE_ENV === NodeEnv.DEVELOPMENT,
+    LEVEL: env.FILE_LOG_LEVEL || 'debug',
+  },
 };
